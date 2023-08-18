@@ -3,7 +3,6 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import CurrentUserDefault
 from rest_framework.relations import SlugRelatedField
-from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.validators import UniqueTogetherValidator
 from django.core.files.base import ContentFile
 
@@ -45,7 +44,6 @@ class CommentSerializer(ModelSerializer):
     author = SlugRelatedField(
         read_only=True, slug_field='username'
     )
-    post = PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         fields = (
@@ -55,6 +53,7 @@ class CommentSerializer(ModelSerializer):
             'created',
             'post',
         )
+        read_only_fields = ('post',)
         model = Comment
 
 

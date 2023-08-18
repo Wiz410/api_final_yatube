@@ -1,3 +1,4 @@
+from django.db.models import UniqueConstraint
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -52,6 +53,14 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='following',
     )
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                fields=['user', 'following'],
+                name='Subscriptions',
+            )
+        ]
 
     def __str__(self):
         return self.user
